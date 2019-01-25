@@ -1,0 +1,111 @@
+.j-header-mode-simple #j-header-wrap {
+    position: absolute;
+    position: fixed;
+    top: 0;
+    z-index: 5;
+    width: 100%;
+}
+
+.j-header-mode-simple #j-compact-header {
+    box-shadow: none;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0;
+    position: relative;
+}
+
+.j-header-mode-simple #j-compact-header {
+    box-shadow: 0 1px 5px rgba(0,0,0,.15);
+    -webkit-transition: box-shadow .5s ease;
+    transition: box-shadow .5s ease;
+}
+
+#j-header, #j-compact-header {
+    background: #306090 top;
+    box-sizing: border-box;
+    min-width: 990px;
+}
+
+.clearfix {
+    min-height: 0;
+}
+
+#j-globalNav-bg {
+    background: none repeat-x 0 0 #fff !important;
+    background-image: inherit;
+    background-color: #fff;
+    height: 77px;
+    outline: 1px solid #e2e2e3;
+    padding: 0 20px;
+    position: relative;
+    margin: auto;
+    max-width: 100%;
+}
+
+#j-globalNav {
+    display: block;
+    float: left;
+    position: relative;
+}
+
+#j-globalNav>li:first-child+li.j-globalNav-li {
+    margin: 0 0 0 -20px;
+}
+
+.j-globalNav li.j-globalNav-li {
+    display: block;
+    float: left;
+    height: 38px;
+    line-height: 25px;
+    list-style-type: none;
+    position: relative;
+    font-weight: 500;
+}
+
+.j-simple-nav-logo {
+    padding: 0;
+}
+
+a:link, a:visited, .j-body-news .j-menu .j-homenav-link {
+    color: #404041;
+}
+
+a:link, a:visited {
+    color: #3778c7;
+    text-decoration: none;
+}
+
+.j-simple-logo {
+    height: 77px;
+    padding: 3px 25px 0;
+    overflow: hidden;
+    display: inline-block;
+}
+
+.j-simple-logo .pwc-logo-static {
+    background: url(/pwc-logo-static.jpg) 0 2px no-repeat;
+}
+
+.j-simple-logo .pwc-logo {
+    width: 100px;
+    height: 70px;
+    float: left;
+    padding-right: 20px;
+    margin-right: 20px;
+    border-right: 1px solid #e2e2e3;
+}
+
+.j-simple-logo .tagline {
+    font-family: 'arial', sans-serif;
+    font-size: 12px;
+    color: #939598;
+    float: left;
+    line-height: 17px;
+    margin-top: 16px;
+}
+
+.j-simple-logo .tagline .name {
+    font-size: 14px;
+    color: #404041;
+    display: block;
+}

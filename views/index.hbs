@@ -1,62 +1,89 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Dropzone.js Example</title>
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/dropzone/dist/dropzone.css">
-    <meta name="csrf-token" content="XYZ123">
-  </head>
-  <body>
-    <div class="container">
-      <header>
-        <h1>Dropzone.js Example</h1>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <title></title>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="/dropzone/dist/dropzone.css" />
+  <link rel="stylesheet" type="text/css" href="/style.css">
+  <meta name="csrf-token" content="XYZ123" />
+</head>
+<body>
+  <div class="container">
+    <div id="j-header-wrap" data-company-name="" data-no-user-bar="false" role="banner">
+      <header id="j-compact-header" class="clearfix">
+        <!-- Navigational buttons/links -->
+        <nav id="j-globalNav-bg" role="navigation" aria-label="Jive" data-mode="simple">
+          <ul id="j-globalNav" role="menubar" class="j-globalNav">
+            <li class="j-simple-nav-logo j-globalNav-li">
+              <a class="j-simple-logo js-logo" href="#">
+              <div id="pwc-logo" class="pwc-logo pwc-logo-static" alt="Your Spark home view" title="Your Spark home view"></div>
+              <div class="tagline" alt="Your Spark home view" title="Your Spark home view">
+                <span class="name block">Tool Name</span>Tool Description
+              </div></a>
+            </li>
+          </ul>
+        </nav>
       </header>
-
-      <div>
-        <form id="upload-widget" method="post" action="/upload" class="dropzone">
-          <div class="fallback">
-            <input name="file" type="file" />
-          </div>
-        </form>
-      </div>
-
-      <footer style="margin-top:500px;">
-        <p>This demo is designed to accompany <a href="http://www.sitepoint.com/file-upload-form-express-dropzone-js/">this article</a>.</p>
-      </footer>
     </div>
+    <div>
+      <form id="upload-widget" method="post" action="/upload" class="dropzone" name="upload-widget">
+        <div class="fallback">
+          <input name="file" type="file" />
+        </div>
+        <div id="btn-remove"><i class="fa fa-trash" aria-hidden="true"></i></div>
+      </form>
+      <span class="error-msg"></span>
+    </div>
+    <div class="action-wrapper">
+      <button id="btn-analyze" disabled="true">Analyze</button>
+    </div>
+  </div>
+  <script type="text/javascript" src="/dropzone/dist/dropzone.js"></script> 
+  <script type="text/javascript">
+  //<![CDATA[
 
-    <script type="text/javascript" src="/dropzone/dist/dropzone.js"></script>
-    <script type="text/javascript">
       Dropzone.options.uploadWidget = {
         paramName: 'file',
-        maxFilesize: 2, // MB
+        maxFilesize: 200, // MB
         maxFiles: 1,
-        dictDefaultMessage: 'Drag an image here to upload, or click to select one',
+        dictDefaultMessage: 'Drag your file here to upload, or click to select one',
         headers: {
           'x-csrf-token': document.querySelectorAll('meta[name=csrf-token]')[0].getAttributeNode('content').value,
         },
-        acceptedFiles: 'image/*',
+        acceptedFiles: 'image/*, .pdf',
+        createImageThumbnails: false,
+        previewTemplate: '<div class="uploaded-image"><span data-dz-name></span> <strong class="dz-size" data-dz-size></strong><div class="dz-error-message" data-dz-errormessage></div><div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress></span></div></div>',
         init: function() {
           this.on('success', function( file, resp ){
-            console.log( file );
-            console.log( resp );
+            $('.error-msg').text('');
+            $('#btn-analyze').attr('disabled', false);
           });
-          this.on('thumbnail', function(file) {
-            if ( file.width < 640 || file.height < 480 ) {
-              file.rejectDimensions();
-            } else {
-              file.acceptDimensions();
+          this.on('error', function( file, resp ){
+            $('.error-msg').text(resp);
+            this.removeFile(file);
+          });
+          this.on("addedfile", function() {
+            if (this.files[1]!=null){
+              this.removeFile(this.files[0]);
             }
           });
-        },
-        accept: function(file, done) {
-          file.acceptDimensions = done;
-          file.rejectDimensions = function() {
-            done('The image must be at least 640 x 480px')
-          };
         }
       };
-    </script>
-  </body>
+
+
+      $("#btn-remove").click(function(){
+        Dropzone.forElement("#upload-widget").removeAllFiles(true);
+        $('.error-msg').text('');
+        $('#btn-analyze').attr('disabled', true);
+      })
+
+      $("#btn-analyze").click(function(){
+        alert("File Name - " + Dropzone.forElement("#upload-widget").files[0].name);
+      })
+  //]]>
+  </script>
+</body>
 </html>
